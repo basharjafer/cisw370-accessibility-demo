@@ -2,76 +2,355 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Student Services Portal</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ARC Student Services Portal</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #cfcfcf; /* Low contrast */
-      padding: 20px;
+    :root{
+      --bg:#0f172a;        /* deep navy */
+      --panel:#111827;     /* dark panel */
+      --card:#0b1220;      /* card */
+      --text:#e5e7eb;      /* primary text */
+      --muted:#9ca3af;     /* muted text */
+      --brand:#38bdf8;     /* sky */
+      --warn:#f59e0b;      /* amber */
+      --badLink:#6b7280;   /* gray link */
     }
 
-    .nav a {
-      margin-right: 10px;
-      color: #aaa; /* Low contrast links */
-      text-decoration: none;
+    /* Intentional issue: removes focus outline (keyboard users) */
+    *:focus { outline: none; }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), #020617);
+      color: var(--text);
     }
 
-    .button {
-      background: #ddd;
-      color: #eee; /* Low contrast */
-      padding: 10px;
-      display: inline-block;
-      cursor: pointer;
+    header{
+      background: rgba(17,24,39,0.9);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
     }
 
-    .card {
-      background: white;
-      padding: 15px;
-      margin-top: 20px;
+    .container{
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 18px;
     }
 
-    input {
-      padding: 5px;
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .logo{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      background: radial-gradient(circle at 30% 30%, #7dd3fc, #0284c7);
+      box-shadow: 0 8px 22px rgba(56,189,248,0.25);
+    }
+
+    nav a{
+      color: var(--badLink); /* Intentional issue: low contrast links */
+      text-decoration:none;
+      margin-left: 14px;
+      font-size: 0.95rem;
+    }
+    nav a:hover{ color: var(--brand); }
+
+    .hero{
+      padding: 26px 0 10px;
+    }
+
+    /* Intentional issue: low contrast paragraph text */
+    .hero p{ color:#7b8496; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 16px;
+    }
+
+    .card{
+      background: rgba(11,18,32,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+
+    .card h2{
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .pill{
+      display:inline-block;
+      font-size: 0.8rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(56,189,248,0.15);
+      border: 1px solid rgba(56,189,248,0.25);
+      color: var(--text);
+    }
+
+    .list{
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .list li{
+      padding: 10px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
       margin-bottom: 10px;
-      width: 200px;
+    }
+
+    .meta{
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    /* Intentional issue: clickable div pretending to be a button */
+    .fakeButton{
+      display:inline-block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(245,158,11,0.2);
+      border: 1px solid rgba(245,158,11,0.35);
+      color: #fde68a;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .linkRow a{
+      color: #94a3b8; /* still low-ish */
+      text-decoration: underline;
+    }
+
+    .formRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    input, select{
+      width: 100%;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(2,6,23,0.6);
+      color: var(--text);
+    }
+
+    .hint{
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* Intentional issue: required indicated by color only */
+    .requiredNote{
+      font-size: 0.85rem;
+      color: #ef4444;
+      margin-top: 8px;
+    }
+
+    table{
+      width:100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      overflow:hidden;
+      border-radius: 12px;
+    }
+    td{
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: #d1d5db;
+    }
+
+    footer{
+      margin-top: 18px;
+      padding: 18px 0 30px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .formRow{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div>
+          <div style="font-weight:700;">ARC Student Services</div>
+          <div class="meta">Online Portal</div>
+        </div>
+      </div>
 
-  <div class="nav">
-    <a href="#">Click here</a>
-    <a href="#">More</a>
-    <a href="#">Go</a>
-  </div>
+      <!-- Intentional issue: no skip link to main content -->
+      <nav>
+        <!-- Intentional issue: unclear link text -->
+        <a href="#services">Click here</a>
+        <a href="#help">More</a>
+        <a href="#contact">Go</a>
+      </nav>
+    </div>
+  </header>
 
-  <h3>Welcome</h3>
-  <h1>Student Services Portal</h1>
+  <main class="container">
+    <section class="hero">
+      <!-- Intentional issue: heading order (H3 before H1) -->
+      <h3 class="pill">Quick Access</h3>
+      <h1>Student Services Portal</h1>
+      <p>
+        Use this portal to request support, view office hours, and find important resources.
+        (This page is a demo for an accessibility evaluation activity.)
+      </p>
 
-  <img src="https://via.placeholder.com/150">
+      <!-- Intentional issue: missing alt text on meaningful image -->
+      <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=60"
+           style="width:100%; max-height:220px; object-fit:cover; border-radius:18px; border:1px solid rgba(255,255,255,0.08); margin-top:10px;">
+    </section>
 
-  <div class="card">
-    <h2>Contact Us</h2>
-    <form>
-      <input type="text" placeholder="Name"><br>
-      <input type="email" placeholder="Email"><br>
-      <input type="submit" value="Submit">
-    </form>
-  </div>
+    <section class="grid" id="services">
+      <div class="card">
+        <h2>Announcements</h2>
+        <ul class="list">
+          <li>
+            <div style="font-weight:650;">Financial Aid Drop-In Hours</div>
+            <div class="meta">Mon–Thu • 1:00 PM – 3:00 PM</div>
+          </li>
+          <li>
+            <div style="font-weight:650;">Counseling Appointments</div>
+            <div class="meta">Book online for Spring planning</div>
+          </li>
+          <li>
+            <div style="font-weight:650;">Canvas Support</div>
+            <div class="meta">Live chat available this week</div>
+          </li>
+        </ul>
 
-  <div tabindex="0" class="button" onclick="alert('Submitted!')">
-    Submit Request
-  </div>
+        <div class="actions">
+          <!-- Intentional issue: clickable div instead of button -->
+          <div class="fakeButton" onclick="alert('Request submitted (demo).')">Submit Request</div>
+
+          <!-- Intentional issue: vague link text -->
+          <div class="linkRow">
+            <a href="#help">Click here</a> for help &nbsp;|&nbsp;
+            <a href="#contact">Click here</a> to contact us
+          </div>
+        </div>
+
+        <div class="hint">
+          Tip: Try evaluating this page with WAVE or axe, and try keyboard navigation.
+        </div>
+      </div>
+
+      <aside class="card" id="help">
+        <h2>Quick Links</h2>
+        <ul class="list">
+          <!-- Intentional issue: links that all say “More/Go/Click here” already exist -->
+          <li><a href="#contact" style="color:#9ca3af;">More</a></li>
+          <li><a href="#contact" style="color:#9ca3af;">Go</a></li>
+          <li><a href="#contact" style="color:#9ca3af;">Click here</a></li>
+        </ul>
+
+        <!-- Intentional issue: table without header cells -->
+        <h2 style="margin-top:14px;">Office Hours</h2>
+        <table>
+          <tr><td>Financial Aid</td><td>Mon–Thu</td></tr>
+          <tr><td>Counseling</td><td>Tue–Fri</td></tr>
+          <tr><td>Tech Support</td><td>Daily</td></tr>
+        </table>
+      </aside>
+    </section>
+
+    <section class="card" id="contact" style="margin-top:16px;">
+      <h2>Contact Us</h2>
+
+      <!-- Intentional issue: required fields indicated by color only -->
+      <div class="requiredNote">Fields in red are required.</div>
+
+      <!-- Intentional issue: inputs have placeholders but no labels -->
+      <div class="formRow">
+        <input type="text" placeholder="Name">
+        <input type="email" placeholder="Email">
+        <select>
+          <option>Choose a topic</option>
+          <option>Financial Aid</option>
+          <option>Counseling</option>
+          <option>Canvas Support</option>
+        </select>
+        <input type="text" placeholder="Message">
+      </div>
+
+      <!-- Intentional issue: submit is input without clear accessible name context -->
+      <div class="actions" style="margin-top:12px;">
+        <input type="submit" value="Submit">
+      </div>
+
+      <div class="hint">
+        If something feels “easy” visually, test how it works with tools and keyboard navigation.
+      </div>
+    </section>
+
+    <footer>
+      © ARC Student Services Portal (Demo). For instructional use in CISW 370.
+    </footer>
+  </main>
 
   <script>
-    // Keyboard trap
+    /* Intentional issue: keyboard trap (blocks Tab navigation) */
     document.addEventListener("keydown", function (e) {
       if (e.key === "Tab") {
         e.preventDefault();
       }
     });
-  </script>
 
+    /*
+      INSTRUCTOR NOTES (do not show students):
+      Intentional issues included:
+      1) No visible focus outline (*:focus outline none)
+      2) No skip link
+      3) Low-contrast nav links
+      4) Vague link text ("Click here", "More", "Go")
+      5) Bad heading order (H3 before H1)
+      6) Missing alt text on banner image
+      7) Clickable div used as a button
+      8) Required fields indicated by color only
+      9) Form inputs missing labels (placeholder-only)
+      10) Table without headers
+      11) Keyboard trap (Tab disabled)
+    */
+  </script>
 </body>
 </html>
