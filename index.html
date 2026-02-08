@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Student Services Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      color: #cfcfcf; /* Low contrast */
+      padding: 20px;
+    }
+
+    .nav a {
+      margin-right: 10px;
+      color: #aaa; /* Low contrast links */
+      text-decoration: none;
+    }
+
+    .button {
+      background: #ddd;
+      color: #eee; /* Low contrast */
+      padding: 10px;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    input {
+      padding: 5px;
+      margin-bottom: 10px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav">
+    <a href="#">Click here</a>
+    <a href="#">More</a>
+    <a href="#">Go</a>
+  </div>
+
+  <h3>Welcome</h3>
+  <h1>Student Services Portal</h1>
+
+  <img src="https://via.placeholder.com/150">
+
+  <div class="card">
+    <h2>Contact Us</h2>
+    <form>
+      <input type="text" placeholder="Name"><br>
+      <input type="email" placeholder="Email"><br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+
+  <div tabindex="0" class="button" onclick="alert('Submitted!')">
+    Submit Request
+  </div>
+
+  <script>
+    // Keyboard trap
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+</html>
